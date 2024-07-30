@@ -44,22 +44,30 @@ function App() {
   const [postBody, setPostBody] = useState('')
   const navigate = useNavigate();
 
-  const handleSumbit = (e) => {
+  useEffect(() => {
+    const filteredResults = posts.filter(post => 
+      ((post.body).toLowerCase().includes(search.toLowerCase()))
+      || ((post.title).toLowerCase().includes(search.toLowerCase())))
+
+      setSearchResults(filteredResults.reverse())
+  }, [posts, search])
+
+  const handleSubmit = (e) => {
     e.preventDefault()
     const id = posts.length ? posts[posts.length - 1].id + 1 : 1;
-    const datetime = format(new Date(), 'DD mm, yyyy pp');
+    const datetime = format(new Date(), 'dd MMMM yyyy pp');
     const newPost = { id, title: postTitle, datetime, body: postBody }
     const allPosts = [ ...posts, newPost ]
     setPosts(allPosts);
-    setPostTitle('')
-    setPostBody('')
-    navigate.push('/')
+    setPostTitle('');
+    setPostBody('');
+    navigate('/');
   }
 
   const handleDelete = (id) => {
     const postsList = posts.filter(post => post.id !== id)
     setPosts(postsList)
-    navigate.push('/')
+    navigate('/')
   }
 
   return (
@@ -67,7 +75,7 @@ function App() {
       <Header title="Blog"/>
       <Nav search={search} setSearch={setSearch}/>
       <Routes>
-        <Route path="/" element={<Home posts={posts} />} />
+        <Route path="/" element={<Home posts={searchResults} />} />
         <Route path="/post" element={<NewPost handleSubmit={handleSubmit} postTitle={postTitle} setPostTitle={setPostTitle} postBody={postBody} setPostBody={setPostBody}/>} />
         <Route path="/post/:id" element={<PostPage posts={posts} handleDelete={handleDelete} />} />
         <Route path="/about" element={<About />} />

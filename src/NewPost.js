@@ -12,11 +12,11 @@ const NewPost = ({ handleSubmit, postTitle, setPostTitle, postBody, setPostBody}
                     onChange={(e) => setPostTitle(e.target.value)}
                 />
                 <label htmlFor="postBody">Post:</label>
-                <input
+                <textarea
                     id="postBody"
                     type="text"
                     required
-                    value="postBody"
+                    value={postBody}
                     onChange={(e) => setPostBody(e.target.value)}
                 />
                 <button type="submit">Submit</button>        
