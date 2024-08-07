@@ -68,6 +68,7 @@ function App() {
 
   const handleDelete = async (id) => {
     try {
+      await api.delete(`/posts/${id}`)
       const postsList = posts.filter(post => post.id !== id)
       setPosts(postsList)
       navigate('/')
@@ -78,7 +79,7 @@ function App() {
 
   const handleEdit = async (id) => {
     const datetime = format(new Date(), 'dd MMMM yyyy pp');
-    const updatePost = { id, title: postTitle, datetime, body: postBody }
+    const updatePost = { id, title: editTitle, datetime, body: editBody }
     try {
       const response = await api.put(`/posts/${id}`, updatePost)
       setPosts(posts.map(post => post.id === id ? { ...response.data } : post))
@@ -97,7 +98,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home posts={searchResults} />} />
         <Route path="/post" element={<NewPost handleSubmit={handleSubmit} postTitle={postTitle} setPostTitle={setPostTitle} postBody={postBody} setPostBody={setPostBody}/>} />
-        <Route path="/edit/:id" element={<EditPost handleEdit={handleEdit} editTitle={editTitle} setEditTitle={setEditTitle} editBody={editBody} setEditBody={setEditBody}/>} />
+        <Route path="/edit/:id" element={<EditPost posts={posts} handleEdit={handleEdit} editTitle={editTitle} setEditTitle={setEditTitle} editBody={editBody} setEditBody={setEditBody}/>} />
         <Route path="/post/:id" element={<PostPage posts={posts} handleDelete={handleDelete} />} />
         <Route path="/about" element={<About />} />
         <Route path="*" element={<Missing />} />
