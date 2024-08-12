@@ -22,18 +22,17 @@ const useAxiosFetch = (dataURL) => {
                 }
             } catch (err) {
                 if (isMounted) {
-                    fetchError(err.message)
+                    setFetchError(err.message)
                     setData([])
                 }
             } finally {
-                isMounted && setTimeout(() => isLoading(false), 2000)
+                isMounted && setIsLoading(false)
             }
         }
 
         fetchData(dataURL);
 
         const cleanUp = () => {
-            console.log('cleaning up...')
             isMounted = false;
             source.cancel();
         }
