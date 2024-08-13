@@ -86,10 +86,10 @@ function App() {
   return (
     <div className="App">
       <DataProvider>
-        <Header title="Blog" width={width}/>
-        <Nav search={search} setSearch={setSearch}/>
+        <Header title="Blog" />
+        <Nav />
         <Routes>
-          <Route path="/" element={<Home posts={searchResults} fetchError={fetchError} isLoading={isLoading} />} />
+          <Route path="/" element={<Home />} />
           <Route path="/post" element={<NewPost handleSubmit={handleSubmit} postTitle={postTitle} setPostTitle={setPostTitle} postBody={postBody} setPostBody={setPostBody}/>} />
           <Route path="/edit/:id" element={<EditPost posts={posts} handleEdit={handleEdit} editTitle={editTitle} setEditTitle={setEditTitle} editBody={editBody} setEditBody={setEditBody}/>} />
           <Route path="/post/:id" element={<PostPage posts={posts} handleDelete={handleDelete} />} />
