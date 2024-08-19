@@ -38,7 +38,7 @@ export default createStore({
         const { posts } = helpers.getState();
         try {
             const response = await api.post('/posts', newPost)
-            actions.setPosts(...posts, response.data);
+            actions.setPosts([...posts, response.data]);
             actions.setPostTitle('');
             actions.setPostBody('');
           } catch(err) {
